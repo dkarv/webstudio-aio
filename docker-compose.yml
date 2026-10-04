@@ -1,0 +1,25 @@
+services:
+  webstudio:
+    build:
+      context: .
+    image: webstudio-aio
+    restart: unless-stopped
+    ports:
+      # Host and container port must match; change both together with PORT.
+      - "80:80"
+    environment:
+      WEBSTUDIO_HOST: webstudio.localhost
+      PORT: "80"
+      DEV_LOGIN: "true"
+      # Password for the login form (also signs sessions)
+      AUTH_SECRET: ${AUTH_SECRET:-}
+      # Optional OAuth login instead of / in addition to DEV_LOGIN:
+      # GH_CLIENT_ID: ""
+      # GH_CLIENT_SECRET: ""
+      # GOOGLE_CLIENT_ID: ""
+      # GOOGLE_CLIENT_SECRET: ""
+    volumes:
+      - webstudio-data:/data
+
+volumes:
+  webstudio-data:
